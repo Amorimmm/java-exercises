@@ -2,6 +2,7 @@ package application;
 
 import entities.Cliente;
 import entities.Conta;
+import services.BankService;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -14,35 +15,19 @@ public class Main {
 
         Conta conta1 = null;
         Cliente cliente1;
+        BankService bankService = new BankService();
 
         System.out.println("Olá seja bem vindo ao sistema de cadastro de conta corrente !");
         System.out.println("");
 
         while (true) {
-
-            System.out.println("Digite o número da operação que deseja realizar:");
-            System.out.println("[1] Criar conta;");
-            System.out.println("[2] Depositar;");
-            System.out.println("[3] Sacar;");
-            System.out.println("[4] Ver saldo;");
-            System.out.println("[5] Alterar Limite de Saque;");
-            System.out.println("[0] Sair");
+            bankService.printMenu();
             int response = sc.nextInt();
 
             /* Caso tenha selecionado tomar uma ação antes de criar a conta ira surgir uma exceção dizendo que o objeto conta1 está com o valor null*/
 
             if (response == 1) {
-                System.out.println("Digite seu nome:");
-                sc.nextLine();
-                String name = sc.nextLine();
-                System.out.println("Digite sua idade:");
-                int idade = sc.nextInt();
-                System.out.println("Digite seu endereço:");
-                sc.nextLine();
-                String endereco = sc.nextLine();
-
-                cliente1 = new Cliente(name, idade, endereco);
-
+                cliente1 = bankService.createCustomer();
                 conta1 = new Conta(001, 00.00, 1000.00, cliente1);
             } else if (response == 2) {
                 System.out.println("Digite o valor que deseja depositar:");
